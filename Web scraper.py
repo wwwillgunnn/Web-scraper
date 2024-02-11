@@ -71,25 +71,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-'''
-# Refer to parent
-product_listings_elements = [h2_element.parent.parent for h2_element in product_listings]
-# Loop through each listing 
-
-# loop through all links
-links_bar = soup.find('ol', class_='pagination__items')
-links_bar_links = links_bar.find_all("a", href=True)
-for link in links_bar_links:
-    link_url = link["href"]
-
-# Print number of occurrences
-total = results.find_all("span", listing_name.title())
-print(f'\ntotal results for {listing_name} are {len(total)}.')
-'''
+    
