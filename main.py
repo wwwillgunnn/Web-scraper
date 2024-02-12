@@ -2,7 +2,7 @@
 This is an eBay web scraper with the purpose of finding ebay listings that have things on the EEPL list
 Then that data is stored in a spreadsheet
 
-IMPORTANT NOTE: eBay has a limit on how many items you can search for in 1 session, 
+IMPORTANT NOTE: eBay has a limit on how many items you can search for in 1 session,
 Do not run this module with the whole EEPL else you will run into this issue :^).
 
 Made by William Gunn
@@ -49,6 +49,7 @@ data = []
 
 
 def scrape_pages():
+    # Use session for HTTP requests
     with requests.Session() as session:
         for eepl_species in EEPL:
             get_data(session, eepl_species)
@@ -64,11 +65,11 @@ def get_data(session, eepl_species):
         # Get total item count of page --> maybe delete
         count = soup.find(class_="srp-controls__count-heading")
         count_number = count.find("span", class_="BOLD").get_text().strip()
-
+        # Check if page is legitimate for collecting data from
         if page_url is not None and int(count_number.replace(',', '')) > 0 and count_number is not None:
             results = soup.find(id="srp-river-main")
             product_listings = results.find_all("li", class_="s-item__pl-on-bottom")
-            # Use list comprehension for creating the data list
+            # Use list comprehension for creating the data frame
             data.extend([
                 {"Title": item.find("span", role="heading").get_text().strip(),
                  "Price": item.find("span", class_="s-item__price").get_text().strip(),
@@ -76,6 +77,7 @@ def get_data(session, eepl_species):
                  if item.find("span", class_="s-item__seller-info") else "None",
                  "Seller Location": item.find("span", class_="s-item__itemLocation").get_text().strip()
                  if item.find("span", class_="s-item__itemLocation") else "Australia"}
+                # Loop through each listing
                 for item in product_listings[1:]
             ])
             # Loop to the next page
@@ -83,7 +85,8 @@ def get_data(session, eepl_species):
             next_page = soup.find("a", class_="pagination__next")
             if navigation is not None and next_page is not None:
                 page_number += 1
-                time.sleep(1)  # Introduce a delay between requests
+                # Introduce a delay between requests 
+                time.sleep(1) 
             else:
                 break
         else:
