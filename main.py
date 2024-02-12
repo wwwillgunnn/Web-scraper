@@ -3,7 +3,7 @@ This is an eBay web scraper with the purpose of finding ebay listings that have 
 Then that data is stored in a spreadsheet
 
 IMPORTANT NOTE: eBay has a limit on how many items you can search for in 1 session,
-Do not run this module with the whole EEPL else you will run into this issue :^).
+It's reccomended to use 1 pest classification at a time, else you will run into this issue :^).
 
 Made by William Gunn
 """
