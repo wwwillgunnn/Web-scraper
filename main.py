@@ -21,35 +21,29 @@ EEPL = [
     "Virile crayfish", "Quagga mussel", "Zebra mussel", "Quilted melania", "Rusty crayfish", "Serrate crownsnail",
     "Signal crayfish", "Spinycheek crayfish", "Freshwater snails",
     # Marine pests
-    "Asian brackish-water clam", "Overbite clam",
-    "Asian green mussel", "Atlantic oyster drill", "Black-striped false mussel", "Brown mussel",
-    "Brush-clawed shore crab", "Carpet sea squirt", "Centric diatom", "Mitten crab", "Comb jelly", "Harris' mud crab",
-    "Japanese shore crab", "Japanese skeleton shrimp", "Japanese wireweed", "Lady crab", "Asian paddle crab",
-    "New Zealand green-lipped mussel", "Red whelk", "Red-gilled mudworm", "Soft shelled clam", "Toxic dinoflagellate"
+    "Asian brackish-water clam", "Overbite clam", "Asian green mussel", "Atlantic oyster drill",
+    "Black-striped false mussel", "Brown mussel", "Brush-clawed shore crab", "Carpet sea squirt", "Centric diatom",
+    "Mitten crab", "Comb jelly", "Harris' mud crab", "Japanese shore crab", "Japanese skeleton shrimp",
+    "Japanese wireweed", "Lady crab", "Asian paddle crab", "New Zealand green-lipped mussel", "Red whelk",
+    "Red-gilled mudworm", "Soft shelled clam", "Toxic dinoflagellate",
     # Terrestrial invertebrates
-    "Africanised honeybee", "Annona mealybug", "Asian hornet", "Yellow-legged hornet", "Asian beetle mite", "Asian gypsy moth",
-    "Brown marmorated stink bug", "Cape honeybee", "Common eastern bumblebee", "Cycad aulacaspis scale", "Delta wasp",
-    "Dichroplus grasshopper",
-    "Electric ant", "Formosan subterranean termite", "Giant african snail", "Gold dust weevil", "Harlequin lady beetle",
-    "Multicolored Asian lady beetle",
+    "Africanised honeybee", "Annona mealybug", "Asian hornet", "Yellow-legged hornet", "Asian beetle mite",
+    "Asian gypsy moth", "Brown marmorated stink bug", "Cape honeybee", "Common eastern bumblebee",
+    "Cycad aulacaspis scale", "Delta wasp", "Dichroplus grasshopper", "Electric ant", "Formosan subterranean termite",
+    "Giant african snail", "Gold dust weevil", "Harlequin lady beetle", "Multicolored Asian lady beetle",
     "Honey bee tracheal mite", "Oriental powderpost beetle", "Picnic beetle", "Red imported fire ant",
-    "Rosy predator snail", "Shot hole borer",
-    "Western drywood termite",
+    "Rosy predator snail", "Shot hole borer", "Western drywood termite",
     # Vertebrate pests
     "African pygmy hedgehog", "Asian black-spined toad", "Asian painted frog", "Boa constrictor", "Burmese python",
-    "Chinese carp", "Climbing perch",
-    "Common snapping turtle", "Corn snake", "Fire bellied newt", "Flat-tailed house gecko", "Green iguana",
-    "Grey squirrel", "House crow",
-    "Nile tilapia", "Oriental garden lizard", "Pacific rat", "Red-eared slider turtle", "Silver carp", "Snakeheads",
-    "Stoat",
-    "Veiled chameleon", "Walking catfish"
+    "Chinese carp", "Climbing perch", "Common snapping turtle", "Corn snake", "Fire bellied newt",
+    "Flat-tailed house gecko", "Green iguana", "Grey squirrel", "House crow", "Nile tilapia", "Oriental garden lizard",
+    "Pacific rat", "Red-eared slider turtle", "Silver carp", "Snakeheads", "Stoat", "Veiled chameleon", "Walking catfish"
     # Weeds and freshwater alge
-                        "Asiatic sans sedge", "Black sage", "Black swallow-wort", "Brittle naiad", "Cane tibouchina",
-    "Didymo", "Halogeton", "Karoo thorn",
-    "Lagariosiphon", "Leafy spurge", "Limnocharis flava", "Manchurian wildrice", "Mikania", "Mouse-ear hawkweed",
-    "Nepalese browntop", "Portuguese broom",
-    "Slangbos", "South african ragwort", "Spiked pepper", "Water primrose", "Wiregrass"
-]
+    "Asiatic sans sedge", "Black sage", "Black swallow-wort", "Brittle naiad", "Cane tibouchina", "Didymo", "Halogeton",
+    "Karoo thorn", "Lagariosiphon", "Leafy spurge", "Limnocharis flava", "Manchurian wildrice", "Mikania",
+    "Mouse-ear hawkweed", "Nepalese browntop", "Portuguese broom", "Slangbos", "South african ragwort", "Spiked pepper",
+    "Water primrose", "Wiregrass"
+    ]
 # Create list for data frame
 data = []
 
