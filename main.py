@@ -2,6 +2,9 @@
 This is an eBay web scraper with the purpose of finding ebay listings that have things on the EEPL list
 Then that data is stored in a spreadsheet
 
+IMPORTANT NOTE: eBay has a limit on how many items you can search for in 1 session, 
+Do not run this module with the whole EEPL else you will run into this issue :^).
+
 Made by William Gunn
 """
 import requests
