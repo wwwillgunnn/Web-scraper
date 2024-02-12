@@ -60,7 +60,7 @@ def get_data(session, eepl_species):
     page_number = 1
     while True:
         page_url = f"https://www.ebay.com.au/sch/i.html?_from=R40&_nkw={eepl_species.replace(' ', '+')}&_sacat=190&rt=nc&_pgn={page_number}"
-        response = session.get(page_url, headers={'User-Agent': 'Mozilla/5.0'})
+        response = session.get(page_url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"})
         soup = BeautifulSoup(response.text, "lxml")
         # Get total item count of page --> maybe delete
         count = soup.find(class_="srp-controls__count-heading")
@@ -85,8 +85,8 @@ def get_data(session, eepl_species):
             next_page = soup.find("a", class_="pagination__next")
             if navigation is not None and next_page is not None:
                 page_number += 1
-                # Introduce a delay between requests 
-                time.sleep(1) 
+                # Introduce a delay between requests
+                time.sleep(1)
             else:
                 break
         else:
