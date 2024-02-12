@@ -2,6 +2,8 @@
 This is an eBay web scraper with the purpose of finding and storing ebay listings that have
 pests on the Exotic Environmental Pest List (EEPL)
 
+This module will only print out results to the terminal
+
 Made by William Gunn
 """
 import requests
