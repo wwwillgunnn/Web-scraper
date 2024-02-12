@@ -1,8 +1,6 @@
 """
-This is an eBay web scraper with the purpose of finding and storing ebay listings that have
-pests on the Exotic Environmental Pest List (EEPL)
-
-This module will export the results to an excel file
+This is an eBay web scraper with the purpose of finding ebay listings that have things on the EEPL list
+Then that data is stored in a spreadsheet
 
 Made by William Gunn
 """
@@ -25,74 +23,74 @@ EEPL = [
     "Japanese shore crab", "Japanese skeleton shrimp", "Japanese wireweed", "Lady crab", "Asian paddle crab",
     "New Zealand green-lipped mussel", "Red whelk", "Red-gilled mudworm", "Soft shelled clam", "Toxic dinoflagellate"
     # Terrestrial invertebrates
-    "Africanised honeybee", "Annona mealybug", "Asian hornet", "Yellow-legged hornet", "Asian beetle mite", "Asian gypsy moth",
-    "Brown marmorated stink bug", "Cape honeybee", "Common eastern bumblebee", "Cycad aulacaspis scale", "Delta wasp", "Dichroplus grasshopper",
-    "Electric ant", "Formosan subterranean termite", "Giant african snail", "Gold dust weevil", "Harlequin lady beetle", "Multicolored Asian lady beetle",
-    "Honey bee tracheal mite", "Oriental powderpost beetle", "Picnic beetle", "Red imported fire ant", "Rosy predator snail", "Shot hole borer",
+                                                                                               "Africanised honeybee",
+    "Annona mealybug", "Asian hornet", "Yellow-legged hornet", "Asian beetle mite", "Asian gypsy moth",
+    "Brown marmorated stink bug", "Cape honeybee", "Common eastern bumblebee", "Cycad aulacaspis scale", "Delta wasp",
+    "Dichroplus grasshopper",
+    "Electric ant", "Formosan subterranean termite", "Giant african snail", "Gold dust weevil", "Harlequin lady beetle",
+    "Multicolored Asian lady beetle",
+    "Honey bee tracheal mite", "Oriental powderpost beetle", "Picnic beetle", "Red imported fire ant",
+    "Rosy predator snail", "Shot hole borer",
     "Western drywood termite",
     # Vertebrate pests
-    "African pygmy hedgehog", "Asian black-spined toad", "Asian painted frog", "Boa constrictor", "Burmese python", "Chinese carp", "Climbing perch",
-    "Common snapping turtle", "Corn snake", "Fire bellied newt", "Flat-tailed house gecko", "Green iguana", "Grey squirrel", "House crow",
-    "Nile tilapia", "Oriental garden lizard", "Pacific rat", "Red-eared slider turtle", "Silver carp", "Snakeheads", "Stoat",
+    "African pygmy hedgehog", "Asian black-spined toad", "Asian painted frog", "Boa constrictor", "Burmese python",
+    "Chinese carp", "Climbing perch",
+    "Common snapping turtle", "Corn snake", "Fire bellied newt", "Flat-tailed house gecko", "Green iguana",
+    "Grey squirrel", "House crow",
+    "Nile tilapia", "Oriental garden lizard", "Pacific rat", "Red-eared slider turtle", "Silver carp", "Snakeheads",
+    "Stoat",
     "Veiled chameleon", "Walking catfish"
     # Weeds and freshwater alge
-    "Asiatic sans sedge", "Black sage", "Black swallow-wort", "Brittle naiad", "Cane tibouchina", "Didymo", "Halogeton", "Karoo thorn",
-    "Lagariosiphon", "Leafy spurge", "Limnocharis flava", "Manchurian wildrice", "Mikania", "Mouse-ear hawkweed", "Nepalese browntop", "Portuguese broom",
+                        "Asiatic sans sedge", "Black sage", "Black swallow-wort", "Brittle naiad", "Cane tibouchina",
+    "Didymo", "Halogeton", "Karoo thorn",
+    "Lagariosiphon", "Leafy spurge", "Limnocharis flava", "Manchurian wildrice", "Mikania", "Mouse-ear hawkweed",
+    "Nepalese browntop", "Portuguese broom",
     "Slangbos", "South african ragwort", "Spiked pepper", "Water primrose", "Wiregrass"
-    ]
+]
+# Create list for data frame
+data = []
 
 
 def scrape_page():
-    # Create list for data frame
-    data = []
-    for EEPL_species in EEPL:
+    for eepl_species in EEPL:
+        eepl_species_listing = eepl_species.replace(" ", "+")
         page_number = 1
-        EEPL_species_listing = EEPL_species.replace(" ", "+")
-        # Get page information
-        page_url = f"https://www.ebay.com.au/sch/i.html?_from=R40&_nkw={EEPL_species_listing}&_sacat=190&rt=nc&_pgn={page_number}"
-        page = requests.get(page_url)
-        soup = BeautifulSoup(page.content, "html.parser")
-        # get total results for looping
-        total_results = soup.find(id="mainContent")
-        navigation = total_results.find("nav", class_="pagination")
-        count = total_results.find(class_="srp-controls__count-heading")
-        count_number = count.find("span", class_="BOLD")
-        # Check page exists
-        if page_url is not None and int(count_number.text.strip().replace(',', '')) > 0:
-            # Get page data
-            results = soup.find(id="srp-river-main")
-            product_listings = results.find_all("li", class_="s-item__pl-on-bottom")
-            # Loop through each listing on the page (skip 1st listing, its not real)
-            for item in product_listings[1:]:
-                title = item.find("span", role="heading")
-                price = item.find("span", class_="s-item__price")
-                # Store data in a dictionary
-                items = {"Title": title.text.strip(),
-                         "Price": price.text.strip()}
-                try:
-                    seller_name = item.find("span", class_="s-item__seller-info")
-                    items["Seller Name"] = seller_name.text.strip()
-                except AttributeError:
-                    seller_location = "None"  # Maybe have 'None' I'm just assuming it's in Australia
-                    items["Seller Name"] = seller_location
-                try:
-                    seller_location = item.find("span", class_="s-item__location s-item__itemLocation")
-                    items["Seller Location"] = seller_location.text.strip()
-                except AttributeError:
-                    seller_location = "Australia"  # Maybe have 'None' I'm just assuming it's in Australia
-                    items["Seller Location"] = seller_location
-                # Append to list
-                data.append(items)
-            # check there's more than 1 page
-            if navigation is not None:
-                # Increment page number
-                int(page_number)
-                page_number += 1
-                print(page_url)
+        while True:
+            # Use session for HTTP requests
+            with requests.Session() as session:
+                # Get page HTML information
+                page_url = f"https://www.ebay.com.au/sch/i.html?_from=R40&_nkw={eepl_species_listing}&_sacat=190&rt=nc&_pgn={page_number}"
+                response = session.get(page_url)
+                soup = BeautifulSoup(response.text, "lxml")
+            # Get total results for looping
+            count = soup.find(class_="srp-controls__count-heading")
+            count_number = count.find("span", class_="BOLD").get_text().strip()
+            # Loop through all pages on site
+            if page_url is not None and int(count_number.replace(',', '')) > 0:
+                # Get page data
+                results = soup.find(id="srp-river-main")
+                product_listings = results.find_all("li", class_="s-item__pl-on-bottom")
+                # Use list comprehension for creating the data set
+                data.extend([
+                    {"Title": item.find("span", role="heading").get_text().strip(),
+                     "Price": item.find("span", class_="s-item__price").get_text().strip(),
+                     "Seller Name": item.find("span", class_="s-item__seller-info").get_text().strip()
+                     if item.find("span", class_="s-item__seller-info") else "None",
+                     "Seller Location": item.find("span", class_="s-item__itemLocation").get_text().strip()
+                     if item.find("span", class_="s-item__itemLocation") else "Australia"}
+                    for item in product_listings[1:]
+                ])
+                # Check to see if theres next page
+                navigation = results.find("nav", class_="pagination")
+                next_page = soup.find("a", class_="pagination__next")
+                if navigation is not None and next_page is not None:
+                    # Increment page number
+                    page_number += 1
+                    print(page_url)
+                else:
+                    break
             else:
-                continue
-        else:
-            continue
+                break
     # Export data to a spreadsheet
     print(data)
     export_data(data)
