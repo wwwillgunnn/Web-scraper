@@ -49,10 +49,10 @@ data = []
 
 
 def scrape_pages():
-    # Use session for HTTP requests
-    with requests.Session() as session:
-        for eepl_species in EEPL:
-            get_data(session, eepl_species)
+    # Create persistent session
+    session = requests.Session()
+    for eepl_species in EEPL:
+        get_data(session, eepl_species)
     export_data(data)
 
 
