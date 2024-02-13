@@ -62,9 +62,14 @@ def get_data(session, eepl_species):
         page_url = f"https://www.ebay.com.au/sch/i.html?_from=R40&_nkw={eepl_species.replace(' ', '+')}&_sacat=190&rt=nc&_pgn={page_number}"
         response = session.get(page_url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"})
         soup = BeautifulSoup(response.text, "lxml")
-        # Get total item count of page --> maybe delete
-        count = soup.find(class_="srp-controls__count-heading")
-        count_number = count.find("span", class_="BOLD").get_text().strip()
+        # Get total item count of page
+        try:
+            count = soup.find(class_="srp-controls__count-heading")
+            count_number = count.find("span", class_="BOLD").text.strip()
+        except AttributeError:
+            print("Too many items were seen on eBay, try to refine search options")
+            export_data(data)
+            break
         # Check if page is legitimate for collecting data from
         if page_url is not None and int(count_number.replace(',', '')) > 0 and count_number is not None:
             results = soup.find(id="srp-river-main")
