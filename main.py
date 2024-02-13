@@ -81,7 +81,8 @@ def get_data(session, eepl_species):
                  "Seller Name": item.find("span", class_="s-item__seller-info-text").get_text().strip()
                  if item.find("span", class_="s-item__seller-info") else "None",
                  "Seller Location": item.find("span", class_="s-item__itemLocation").get_text().strip()
-                 if item.find("span", class_="s-item__itemLocation") else "Australia"}
+                 if item.find("span", class_="s-item__itemLocation") else "Australia",
+                 "Species": eepl_species}
                 # Loop through each listing
                 for item in product_listings[1:]
             ])
