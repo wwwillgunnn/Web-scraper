@@ -23,7 +23,7 @@ EEPL = [
     # Marine pests
     "Asian brackish-water clam", "Overbite clam", "Asian green mussel", "Atlantic oyster drill",
     "Black-striped false mussel", "Brown mussel", "Brush-clawed shore crab", "Carpet sea squirt", "Centric diatom",
-    "Mitten crab", "Comb jelly", "Harris' mud crab", "Japanese shore crab", "Japanese skeleton shrimp",
+    "Mitten crab", "Comb jelly", "Harris mud crab", "Japanese shore crab", "Japanese skeleton shrimp",
     "Japanese wireweed", "Lady crab", "Asian paddle crab", "New Zealand green-lipped mussel", "Red whelk",
     "Red-gilled mudworm", "Soft shelled clam", "Toxic dinoflagellate",
     # Terrestrial invertebrates
