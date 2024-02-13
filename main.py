@@ -100,7 +100,7 @@ def get_data(session, eepl_species):
 
 def export_data(data_frame):
     df = pd.DataFrame(data_frame)
-    df.to_excel("Results.xlsx")
+    df.to_excel("Results.xlsx", index=False)
 
 
 def main():
