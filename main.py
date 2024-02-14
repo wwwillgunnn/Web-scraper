@@ -2,8 +2,7 @@
 This is an eBay web scraper with the purpose of finding ebay listings that have things on the EEPL list
 Then that data is stored in a spreadsheet
 
-IMPORTANT NOTE: eBay has a limit on how many items you can search for in 1 session,
-It's reccomended to use 1 pest classification at a time, else you will run into this issue :^).
+IMPORTANT NOTE: eBay limits you to looking at a max of 10,000 items per search query.
 
 Made by William Gunn
 """
@@ -11,6 +10,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import time
+from random import randint
 
 # Exotic Environmental Pests List
 EEPL = [
@@ -45,7 +45,7 @@ EEPL = [
     "Water primrose", "Wiregrass"
     ]
 # Create list for data frame
-data = []
+DATA = []
 
 
 def scrape_pages():
@@ -53,31 +53,35 @@ def scrape_pages():
     session = requests.Session()
     for eepl_species in EEPL:
         get_data(session, eepl_species)
-    export_data(data)
+    export_data(DATA)
 
 
 def get_data(session, eepl_species):
-    page_number = 1
+    # Define variables
+    page_number, proxy_num, proxies_list = 1, 0, open("proxy_list.txt", "r").read().strip().split("\n")
+    # Collect data for each eepl species
     while True:
-        page_url = f"https://www.ebay.com.au/sch/i.html?_from=R40&_nkw={eepl_species.replace(' ', '+')}&_sacat=190&rt=nc&_pgn={page_number}"
-        response = session.get(page_url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"})
+        page_url = f"https://www.ebay.com.au/sch/i.html?_from=R40&_nkw={eepl_species.replace(' ', '+')}&_sacat=190&rt=nc&_pgn={page_number}&_blrs=spell_auto_correct"
+        response = session.get(page_url, proxies={"http:": proxies_list[proxy_num], "https:": proxies_list[proxy_num]}, timeout=30)
         soup = BeautifulSoup(response.text, "lxml")
         # Get total item count of page
         try:
             count = soup.find(class_="srp-controls__count-heading")
             count_number = count.find("span", class_="BOLD").text.strip()
         except AttributeError:
-            print("Too many items were seen on eBay, try to refine search options")
-            export_data(data)
+            print("10,000 item limit was reached")
+            proxy_num += 1
             break
         # Check if page is legitimate for collecting data from
+        print(page_url)
         if page_url is not None and int(count_number.replace(',', '')) > 0 and count_number is not None:
             results = soup.find(id="srp-river-main")
             product_listings = results.find_all("li", class_="s-item__pl-on-bottom")
             # Use list comprehension for creating the data frame
-            data.extend([
+            DATA.extend([
                 {"Title": item.find("span", role="heading").get_text().strip(),
-                 "Price": item.find("span", class_="s-item__price").get_text().strip(),
+                 "Price": item.find("span", class_="s-item__price").get_text().strip()
+                 if item.find("span", class_="s-item__price") else "None",
                  "Seller Name": item.find("span", class_="s-item__seller-info-text").get_text().strip()
                  if item.find("span", class_="s-item__seller-info") else "None",
                  "Seller Location": item.find("span", class_="s-item__itemLocation").get_text().strip()
@@ -87,12 +91,11 @@ def get_data(session, eepl_species):
                 for item in product_listings[1:]
             ])
             # Loop to the next page
-            navigation = results.find("nav", class_="pagination")
-            next_page = soup.find("a", class_="pagination__next")
+            navigation, next_page = results.find("nav", class_="pagination"), soup.find("a", class_="pagination__next")
             if navigation is not None and next_page is not None:
                 page_number += 1
                 # Introduce a delay between requests
-                time.sleep(1)
+                time.sleep(randint(1, 10))
             else:
                 break
         else:
