@@ -2,7 +2,7 @@
 This is an eBay web scraper with the purpose of finding ebay listings that have things on the EEPL list
 Then that data is stored in a spreadsheet
 
-IMPORTANT NOTE: eBay limits you to looking at a max of 10,000 items per search query.
+IMPORTANT NOTE: eBay limits you to looking at a max of 10,000 items per search query without special permissions.
 
 Made by William Gunn
 """
