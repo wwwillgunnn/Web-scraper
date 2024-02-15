@@ -1,6 +1,5 @@
 """
-This is an eBay web scraper with the purpose of finding ebay listings that have things on the EEPL list
-Then that data is stored in a spreadsheet
+This web scraper was made for eBay, to use this scraper for other sites be sure to change the URL and the .find() attributes to page the page of interest
 
 IMPORTANT NOTE: eBay limits you to looking at a max of 10,000 items per search query without special permissions.
 
