@@ -21,6 +21,7 @@ See the EEPL list in the source code for the complete reference.
 - This script is configured specifically for eBay. To adapt it to another website, you'll need to:
 - Change the base URL in the get_data() function.
 - Update the HTML tag selectors (soup.find(), etc.) based on the site's structure.
+  
 ⚠️ eBay enforces a 10,000-item search limit per query. To handle this, the script rotates through proxies and paginates results.
 
 ## 👤 Author
