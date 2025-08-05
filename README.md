@@ -24,6 +24,5 @@ See the EEPL list in the source code for the complete reference.
   
 ⚠️ eBay enforces a 10,000-item search limit per query. To handle this, the script rotates through proxies and paginates results.
 
-## 👤 Author
-William Gunn
+## 👤 Author - William Gunn
 Created as part of an initiative to monitor the illegal trade of exotic pests in Australia.
