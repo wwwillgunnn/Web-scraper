@@ -17,7 +17,7 @@ The scraper checks listings against an extensive Exotic Environmental Pests List
 - Weeds and algae (e.g. Water primrose, Black sage)
 See the EEPL list in the source code for the complete reference.
 
-##🧠 Notes
+## 🧠 Notes
 - This script is configured specifically for eBay. To adapt it to another website, you'll need to:
 - Change the base URL in the get_data() function.
 - Update the HTML tag selectors (soup.find(), etc.) based on the site's structure.
